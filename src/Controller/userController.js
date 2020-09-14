@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const User = mongoose.model('Users');
+const crypto = require('crypto');
+
+
+
 
 
 module.exports = { 
@@ -33,10 +37,28 @@ module.exports = {
 
     if(!user)
         return res.status(400).send({ error: 'Usuario não foi encontrado' });
+
+    if(user.password !== password)
+        return res.status(400).send({ error: 'senha incorreta' });
         
 
     return res.send(user);
-   } 
+   },
+   
+   async update(req, res) {
+
+        const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        
+        res.send(user);
+
+   },
+
+   async delete(req, res) {
+
+        const user = await User.findByIdAndDelete(req.params.id);
+
+        res.send({ error: 'sua conta foi deletada' });
+   }
 }
 
    

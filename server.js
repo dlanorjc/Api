@@ -1,10 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const requireDir = require('require-dir')
+const requireDir = require('require-dir');
+const bodyParser = require('body-parser');
 
 
 const app = express();
-app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 mongoose.connect('mongodb+srv://ronaldjc:lalado@cluster0.jp6oq.gcp.mongodb.net/Users?retryWrites=true&w=majority', {
     useCreateIndex:true,
